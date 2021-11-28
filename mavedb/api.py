@@ -1,6 +1,12 @@
 """
-MAVEDB API WISHLIST
--------------------
+mavedb.api
+~~~~~~~~~~
+
+Suite of MaveDB API endpoints.
+
+
+MAVE DB API WISHLIST
+--------------------
 HOW IT SHOULD FEEL...
 
 # GET scoresets with URN as JSON
@@ -8,13 +14,13 @@ HOW IT SHOULD FEEL...
 # POST scoresets(?) with URN
 >>> mavedb.scoresets(urn="urn:mavedb:00000040-a-4").post(files=file_obj)
 
-In this form, we can add keyword arguments to .get() that we'd normally
-add to requests.get, e.g. `timeout`. Same goes for post, put, delete, etc....
+In this form, we can add keyword arguments we'd add to requests.get()
+to our method .get(), e.g. `timeout`. Same goes for post, put, delete, etc....
 
 
 FEATURES DISCUSSION
 -------------------
-- Should we return a requests response for every call? (Simplest)
+- Should we return a requests response for every call? (Simplest and most extendable)
 - Or should we return a JSONified response...
     - In this form, we can move parameters to methods such as 'get'.
     E.g.,
@@ -24,7 +30,7 @@ FEATURES DISCUSSION
 
 from posixpath import join as urljoin
 
-from base import BaseAPI, requests_handler
+from mavedb.base import BaseAPI, requests_handler
 
 
 class doi(BaseAPI):

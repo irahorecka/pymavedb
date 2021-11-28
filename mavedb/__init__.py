@@ -1,12 +1,12 @@
 """
-pymavedb
-~~~~~~~~
+mavedb
+~~~~~~
 
 A simple MaveDB API wrapper.
 """
 
 # fmt: off
-from api import (
+from mavedb.api import (
     doi, ensembl, experiments,
     experimentsets, genome, keyword,
     pubmed, reference, refseq, scoresets,
@@ -19,6 +19,6 @@ __all__ = (
     "pubmed", "reference", "refseq", "scoresets",
     "sra", "target", "uniprot", "users",
 )
+# fmt: on
 
 __version__ = "0.0.1"
-# fmt: on
