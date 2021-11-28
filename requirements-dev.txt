@@ -1,0 +1,10 @@
+# For development
+absolufy-imports
+black
+flake8
+flint
+pre-commit
+pylint
+
+# Package requirements
+requests
