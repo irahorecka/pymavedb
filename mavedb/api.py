@@ -159,9 +159,9 @@ class refseq(BaseAPI):
 
 class scoresets(BaseAPI):
     def __init__(self, urn="", download=False):
+        # URN and downloadable flag are included in the URL path.
         super().__init__()
         self.path.append(self.__class__.__name__)
-        # URN and downloadable flag are API endpoints.
         self.path.append(urn)
         if download is True:
             self.path.append("scores")

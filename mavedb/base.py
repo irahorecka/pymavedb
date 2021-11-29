@@ -23,11 +23,9 @@ class BaseAPI:
 
     base_url = "https://mavedb.org/api"
 
-    def __init__(self, *args, **kwargs):
-        # Convert args to kwargs, linking arg values to their variable names.
-        kwargs.update(zip(type(self).__init__.__code__.co_varnames[1:], args))
-        self.params = kwargs
+    def __init__(self, **kwargs):
         self.path = []
+        self.params = kwargs
 
     @property
     def url(self):
