@@ -35,7 +35,7 @@ from mavedb.base import BaseAPI, requests_handler
 
 class doi(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -49,7 +49,7 @@ class doi(BaseAPI):
 
 class ensembl(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -63,7 +63,7 @@ class ensembl(BaseAPI):
 
 class experiments(BaseAPI):
     def __init__(self, urn=""):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__(urn=urn)
 
     @requests_handler
@@ -77,7 +77,7 @@ class experiments(BaseAPI):
 
 class experimentsets(BaseAPI):
     def __init__(self, urn=""):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__(urn=urn)
 
     @requests_handler
@@ -91,7 +91,7 @@ class experimentsets(BaseAPI):
 
 class genome(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -105,7 +105,7 @@ class genome(BaseAPI):
 
 class keyword(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -119,7 +119,7 @@ class keyword(BaseAPI):
 
 class pubmed(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -133,7 +133,7 @@ class pubmed(BaseAPI):
 
 class reference(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -147,7 +147,7 @@ class reference(BaseAPI):
 
 class refseq(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -162,9 +162,9 @@ class refseq(BaseAPI):
 class scoresets(BaseAPI):
     def __init__(self, urn="", download=False):
         # URN and downloadable flag are API endpoints.
-        self.api_endpt = urljoin(self.__class__.__name__, urn)
+        self.path = urljoin(self.__class__.__name__, urn)
         if download is True:
-            self.api_endpt = urljoin(self.api_endpt, "scores")
+            self.path = urljoin(self.path, "scores")
         super().__init__()
 
     @requests_handler
@@ -178,7 +178,7 @@ class scoresets(BaseAPI):
 
 class sra(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -192,7 +192,7 @@ class sra(BaseAPI):
 
 class target(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -206,7 +206,7 @@ class target(BaseAPI):
 
 class uniprot(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler
@@ -220,7 +220,7 @@ class uniprot(BaseAPI):
 
 class users(BaseAPI):
     def __init__(self):
-        self.api_endpt = self.__class__.__name__
+        self.path = self.__class__.__name__
         super().__init__()
 
     @requests_handler

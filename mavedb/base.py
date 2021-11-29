@@ -22,7 +22,7 @@ class BaseAPI:
     """
 
     base_url = "https://mavedb.org/api"
-    api_endpt = ""
+    path = ""
     params = {}
 
     def __init__(self, *args, **kwargs):
@@ -37,10 +37,12 @@ class BaseAPI:
         Returns:
             (str): Generated URL
         """
-        path = f"{urljoin(self.base_url, self.api_endpt)}"
+        # By default, urllib.parse.quote() function is intended for quoting the path section of a URL.
+        url_ = urljoin(self.base_url, urllib.parse.quote(self.path))
         if not self.params:
-            return path
-        return path + f"?{urllib.parse.urlencode(self.params)}"
+            return url_
+        # Use urllib.parse.quote() to quote parameters passed to urllib.parse.urlencode().
+        return url_ + "?" + urllib.parse.urlencode(self.params, quote_via=urllib.parse.quote)
 
 
 def requests_handler(method):
