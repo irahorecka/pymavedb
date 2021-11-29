@@ -2,7 +2,7 @@
 mavedb.base
 ~~~~~~~~~~~
 
-Handles interface between the User and MaveDB.
+Handles interface between the user and MaveDB.
 """
 
 import functools
@@ -17,7 +17,6 @@ class BaseAPI:
 
     Args:
         *args (any): URL parameters as args
-
     Kwargs:
         **kwargs (any): URL parameters as kwargs
     """
@@ -27,7 +26,7 @@ class BaseAPI:
     params = {}
 
     def __init__(self, *args, **kwargs):
-        # Include all other args into kwargs by linking args to their variable names.
+        # Convert args to kwargs, linking arg values to their variable names.
         kwargs.update(zip(type(self).__init__.__code__.co_varnames[1:], args))
         self.params = kwargs
 
@@ -44,14 +43,13 @@ class BaseAPI:
         return path + f"?{urllib.parse.urlencode(self.params)}"
 
 
-def requests_handler(func):
-    """Decorator for using method signatures to make API calls.
+def requests_handler(method):
+    """Uses method signatures to dispatch requests.
 
     Args:
         *args (any): *args for requests.Session methods (e.g. requests.get)
-
     Kwargs:
-        **kwargs (any): **kwargs for requests.Session methods (e.g. requests.get)
+        **kwargs (any): **kwargs for requests.Session methods
 
     Returns:
         (requests.models.Response): Requests response from MaveDB REST API query
@@ -64,10 +62,9 @@ def requests_handler(func):
         "put": requests.put,
     }
 
-    @functools.wraps(func)
+    @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        # Set requests instance
-        requests_method = requests_methods[func.__name__]
+        requests_method = requests_methods[method.__name__]
         response = requests_method(self.url, *args, **kwargs)
         response.raise_for_status()
         return response

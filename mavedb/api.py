@@ -5,8 +5,8 @@ mavedb.api
 Suite of MaveDB API endpoints.
 
 
-MAVE DB API WISHLIST
---------------------
+MAVEDB API WISHLIST
+-------------------
 HOW IT SHOULD FEEL...
 
 # GET scoresets with URN as JSON
