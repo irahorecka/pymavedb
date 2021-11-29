@@ -22,13 +22,12 @@ class BaseAPI:
     """
 
     base_url = "https://mavedb.org/api"
-    path = ""
-    params = {}
 
     def __init__(self, *args, **kwargs):
         # Convert args to kwargs, linking arg values to their variable names.
         kwargs.update(zip(type(self).__init__.__code__.co_varnames[1:], args))
         self.params = kwargs
+        self.path = []
 
     @property
     def url(self):
@@ -38,8 +37,8 @@ class BaseAPI:
             (str): Generated URL
         """
         # By default, urllib.parse.quote() function is intended for quoting the path section of a URL.
-        url_ = urljoin(self.base_url, urllib.parse.quote(self.path))
-        if not self.params:
+        url_ = urljoin(self.base_url, urllib.parse.quote(urljoin(*self.path)))
+        if not any(self.params.values()):
             return url_
         # Use urllib.parse.quote() to quote parameters passed to urllib.parse.urlencode().
         return url_ + "?" + urllib.parse.urlencode(self.params, quote_via=urllib.parse.quote)

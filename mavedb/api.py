@@ -28,15 +28,13 @@ FEATURES DISCUSSION
     >>> mavedb.scoresets.get(limit=100)
 """
 
-from posixpath import join as urljoin
-
 from mavedb.base import BaseAPI, requests_handler
 
 
 class doi(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -49,8 +47,8 @@ class doi(BaseAPI):
 
 class ensembl(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -63,8 +61,8 @@ class ensembl(BaseAPI):
 
 class experiments(BaseAPI):
     def __init__(self, urn=""):
-        self.path = self.__class__.__name__
         super().__init__(urn=urn)
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -77,8 +75,8 @@ class experiments(BaseAPI):
 
 class experimentsets(BaseAPI):
     def __init__(self, urn=""):
-        self.path = self.__class__.__name__
         super().__init__(urn=urn)
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -91,8 +89,8 @@ class experimentsets(BaseAPI):
 
 class genome(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -105,8 +103,8 @@ class genome(BaseAPI):
 
 class keyword(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -119,8 +117,8 @@ class keyword(BaseAPI):
 
 class pubmed(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -133,8 +131,8 @@ class pubmed(BaseAPI):
 
 class reference(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -147,8 +145,8 @@ class reference(BaseAPI):
 
 class refseq(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -161,11 +159,12 @@ class refseq(BaseAPI):
 
 class scoresets(BaseAPI):
     def __init__(self, urn="", download=False):
-        # URN and downloadable flag are API endpoints.
-        self.path = urljoin(self.__class__.__name__, urn)
-        if download is True:
-            self.path = urljoin(self.path, "scores")
         super().__init__()
+        self.path.append(self.__class__.__name__)
+        # URN and downloadable flag are API endpoints.
+        self.path.append(urn)
+        if download is True:
+            self.path.append("scores")
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -178,8 +177,8 @@ class scoresets(BaseAPI):
 
 class sra(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -192,8 +191,8 @@ class sra(BaseAPI):
 
 class target(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -206,8 +205,8 @@ class target(BaseAPI):
 
 class uniprot(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
@@ -220,8 +219,8 @@ class uniprot(BaseAPI):
 
 class users(BaseAPI):
     def __init__(self):
-        self.path = self.__class__.__name__
         super().__init__()
+        self.path.append(self.__class__.__name__)
 
     @requests_handler
     def get(self, *args, **kwargs):
