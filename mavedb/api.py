@@ -28,12 +28,14 @@ FEATURES DISCUSSION
     >>> mavedb.scoresets.get(limit=100)
 """
 
+import functools
+
 from mavedb.base import BaseAPI, requests_handler
 
 
 class doi(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -46,8 +48,8 @@ class doi(BaseAPI):
 
 
 class ensembl(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -60,8 +62,8 @@ class ensembl(BaseAPI):
 
 
 class experiments(BaseAPI):
-    def __init__(self, urn=""):
-        super().__init__(urn=urn)
+    def __init__(self, auth_token, urn=""):
+        super().__init__(auth_token, urn=urn)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -74,8 +76,8 @@ class experiments(BaseAPI):
 
 
 class experimentsets(BaseAPI):
-    def __init__(self, urn=""):
-        super().__init__(urn=urn)
+    def __init__(self, auth_token, urn=""):
+        super().__init__(auth_token, urn=urn)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -88,8 +90,8 @@ class experimentsets(BaseAPI):
 
 
 class genome(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -102,8 +104,8 @@ class genome(BaseAPI):
 
 
 class keyword(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -116,8 +118,8 @@ class keyword(BaseAPI):
 
 
 class pubmed(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -130,8 +132,8 @@ class pubmed(BaseAPI):
 
 
 class reference(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -144,8 +146,8 @@ class reference(BaseAPI):
 
 
 class refseq(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -158,9 +160,9 @@ class refseq(BaseAPI):
 
 
 class scoresets(BaseAPI):
-    def __init__(self, urn="", download=False):
+    def __init__(self, auth_token, urn="", download=False):
         # URN and downloadable flag are included in the URL path.
-        super().__init__()
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
         self.path.append(urn)
         if download is True:
@@ -176,8 +178,8 @@ class scoresets(BaseAPI):
 
 
 class sra(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -190,8 +192,8 @@ class sra(BaseAPI):
 
 
 class target(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -204,8 +206,8 @@ class target(BaseAPI):
 
 
 class uniprot(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -218,8 +220,8 @@ class uniprot(BaseAPI):
 
 
 class users(BaseAPI):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, auth_token):
+        super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
 
     @requests_handler
@@ -229,3 +231,21 @@ class users(BaseAPI):
     @requests_handler
     def post(self, *args, **kwargs):
         pass
+
+
+class MaveDB:
+    def __init__(self, auth_token=None):
+        self.doi = functools.partial(doi, auth_token)
+        self.ensembl = functools.partial(ensembl, auth_token)
+        self.experiments = functools.partial(experiments, auth_token)
+        self.experimentsets = functools.partial(experimentsets, auth_token)
+        self.genome = functools.partial(genome, auth_token)
+        self.keyword = functools.partial(keyword, auth_token)
+        self.pubmed = functools.partial(pubmed, auth_token)
+        self.reference = functools.partial(reference, auth_token)
+        self.refseq = functools.partial(refseq, auth_token)
+        self.scoresets = functools.partial(scoresets, auth_token)
+        self.sra = functools.partial(sra, auth_token)
+        self.target = functools.partial(target, auth_token)
+        self.uniprot = functools.partial(uniprot, auth_token)
+        self.users = functools.partial(users, auth_token)

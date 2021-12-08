@@ -23,7 +23,8 @@ class BaseAPI:
 
     base_url = "https://mavedb.org/api"
 
-    def __init__(self, **kwargs):
+    def __init__(self, auth_token, **kwargs):
+        self.auth_token = auth_token
         self.path = []
         self.params = kwargs
 
@@ -53,16 +54,16 @@ def requests_handler(method):
     Returns:
         (requests.models.Response): Requests response from MaveDB REST API query
     """
-    requests_methods = {
-        "delete": requests.delete,
-        "get": requests.get,
-        "patch": requests.patch,
-        "post": requests.post,
-        "put": requests.put,
-    }
 
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
+        requests_methods = {
+            "delete": functools.partial(requests.delete, headers={"Authorization": self.auth_token}),
+            "get": requests.get,
+            "patch": functools.partial(requests.patch, headers={"Authorization": self.auth_token}),
+            "post": functools.partial(requests.post, headers={"Authorization": self.auth_token}),
+            "put": functools.partial(requests.put, headers={"Authorization": self.auth_token}),
+        }
         requests_method = requests_methods[method.__name__]
         response = requests_method(self.url, *args, **kwargs)
         response.raise_for_status()
