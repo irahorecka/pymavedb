@@ -36,11 +36,11 @@ class BaseAPI:
         Returns:
             (str): Generated URL
         """
-        # By default, urllib.parse.quote() function is intended for quoting the path section of a URL.
+        # By default, `urllib.parse.quote()` quotes the URL path.
         url_ = urljoin(self.base_url, urllib.parse.quote(urljoin(*self.path)))
         if not any(self.params.values()):
             return url_
-        # Use urllib.parse.quote() to quote parameters passed to urllib.parse.urlencode().
+        # Use `urllib.parse.quote` to quote parameters passed to `urllib.parse.urlencode()`.
         return url_ + "?" + urllib.parse.urlencode(self.params, quote_via=urllib.parse.quote)
 
 
