@@ -3,29 +3,6 @@ mavedb.api
 ~~~~~~~~~~
 
 Suite of MaveDB API endpoints.
-
-
-MAVEDB API WISHLIST
--------------------
-HOW IT SHOULD FEEL...
-
-# GET scoresets with URN as JSON
->>> mavedb.scoresets(urn="urn:mavedb:00000040-a-4").get().json()
-# POST scoresets(?) with URN
->>> mavedb.scoresets(urn="urn:mavedb:00000040-a-4").post(files=file_obj)
-
-In this form, we can add keyword arguments we'd add to requests.get()
-to our method .get(), e.g. `timeout`. Same goes for post, put, delete, etc....
-
-
-FEATURES DISCUSSION
--------------------
-- Should we return a requests response for every call? (Simplest and most extendable)
-- Or should we return a JSONified response...
-    - In this form, we can move parameters to methods such as 'get'.
-    E.g.,
-    >>> mavedb.scoresets.get(urn="urn:mavedb:00000040-a-4")
-    >>> mavedb.scoresets.get(limit=100)
 """
 
 import functools
@@ -34,6 +11,8 @@ from mavedb.base import BaseAPI, requests_handler
 
 
 class doi(BaseAPI):
+    """/doi - Queries the Digital Object Identifiers (DOI) list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -48,6 +27,8 @@ class doi(BaseAPI):
 
 
 class ensembl(BaseAPI):
+    """/ensembl - Queries identifiers in the Ensembl database."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -62,6 +43,8 @@ class ensembl(BaseAPI):
 
 
 class experiments(BaseAPI):
+    """/experiments - Queries Mave experiments."""
+
     def __init__(self, auth_token, urn=""):
         super().__init__(auth_token, urn=urn)
         self.path.append(self.__class__.__name__)
@@ -76,6 +59,10 @@ class experiments(BaseAPI):
 
 
 class experimentsets(BaseAPI):
+    """/experimentsets - Queries Mave experimentsets.
+    Experimentsets are the parent category of experiments.
+    """
+
     def __init__(self, auth_token, urn=""):
         super().__init__(auth_token, urn=urn)
         self.path.append(self.__class__.__name__)
@@ -90,6 +77,8 @@ class experimentsets(BaseAPI):
 
 
 class genome(BaseAPI):
+    """/genome - Queries identifiers in the GenomeAssembly database."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -104,6 +93,8 @@ class genome(BaseAPI):
 
 
 class keyword(BaseAPI):
+    """/keyword - Queries Mave keywords."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -118,6 +109,8 @@ class keyword(BaseAPI):
 
 
 class pubmed(BaseAPI):
+    """/pubmed - Queries identifiers in the PubMed database."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -132,6 +125,8 @@ class pubmed(BaseAPI):
 
 
 class reference(BaseAPI):
+    """/reference - Queries identifiers in the Reference Genome list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -146,6 +141,8 @@ class reference(BaseAPI):
 
 
 class refseq(BaseAPI):
+    """/refseq - Queries identifiers in the Refseq Identifier list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -160,9 +157,11 @@ class refseq(BaseAPI):
 
 
 class scoresets(BaseAPI):
+    """/scoresets - Queries the Mave Score Set list."""
+
     def __init__(self, auth_token, urn="", download=False):
-        # URN and downloadable flag are included in the URL path.
         super().__init__(auth_token)
+        # URN and downloadable flag are included in the URL path.
         self.path.append(self.__class__.__name__)
         self.path.append(urn)
         if download is True:
@@ -178,6 +177,8 @@ class scoresets(BaseAPI):
 
 
 class sra(BaseAPI):
+    """/sra - Queries the Sequence Read Archive (SRA) identifier list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -192,6 +193,8 @@ class sra(BaseAPI):
 
 
 class target(BaseAPI):
+    """/target - Queries the Mave Target Gene list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -206,6 +209,8 @@ class target(BaseAPI):
 
 
 class uniprot(BaseAPI):
+    """/uniprot - Queries identifiers in the UniProt database."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -220,6 +225,8 @@ class uniprot(BaseAPI):
 
 
 class users(BaseAPI):
+    """/users - Queries the Mave User list."""
+
     def __init__(self, auth_token):
         super().__init__(auth_token)
         self.path.append(self.__class__.__name__)
@@ -234,6 +241,13 @@ class users(BaseAPI):
 
 
 class MaveDB:
+    """Public API class to interface with the Mave Database (MaveDB).
+
+    Kwargs:
+        auth_token (str): Authorization token for MaveDB. Required for
+                          requests requiring authorized credentials
+    """
+
     def __init__(self, auth_token=None):
         self.doi = functools.partial(doi, auth_token)
         self.ensembl = functools.partial(ensembl, auth_token)

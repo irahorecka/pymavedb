@@ -16,7 +16,8 @@ class BaseAPI:
     """Base API wrapper for the MaveDB REST API.
 
     Args:
-        *args (any): URL parameters as args
+        auth_token (str): Authorization token for MaveDB. Required for
+                          requests requiring authorized credentials
     Kwargs:
         **kwargs (any): URL parameters as kwargs
     """
